@@ -1,4 +1,4 @@
-# docker-practice
+# Docker Practice Project
 
 ## Using `mongo` and `mongo-express` docker images
 
@@ -39,3 +39,11 @@ mongo-express
 Access `http://localhost:8081` in browser and enter `Username = admin` & `Password = pass` (default) to sign in to MongoDB UI.
 
 Access `http://localhost:5050` in browser to interact with UI where you can add user and see all users.
+
+## UI Screenshots
+
+### Docker Practice UI
+![Docker Practice UI](./Docker%20Practice%20UI.png)
+
+### MongoDB UI
+![MongoDB UI](./MongoDB%20UI.png)
