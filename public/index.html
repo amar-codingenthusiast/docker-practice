@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./style.css" type="text/css" />
+		<title>Docker Practice</title>
+	</head>
+	<body>
+		<h1>🚀 Docker Practice Project</h1>
+		<p>
+			A simple practice setup using Docker with MongoDB, Mongo Express,
+			and a Node.js backend. You can register users, view them, and
+			explore containerized app development.
+		</p>
+		<form id="signupForm">
+			<div class="field">
+				<label for="email">Email: </label>
+				<input type="text" name="email" required />
+			</div>
+			<div class="field">
+				<label for="username">Username: </label>
+				<input type="text" name="username" required />
+			</div>
+			<div class="field">
+				<label for="password">Password: </label>
+				<input type="password" name="password" required />
+			</div>
+			<button type="submit" id="formBtn">Create Account</button>
+		</form>
+		<div style="margin-top: 1rem">
+			<button id="getUsersBtn">Get All Users</button>
+		</div>
+		<div id="usersList" style="margin-top: 1rem">
+			<h2>Registered Users</h2>
+			<ul id="usersUl"></ul>
+		</div>
+		<script>
+			document
+				.getElementById("signupForm")
+				.addEventListener("submit", async function (e) {
+					e.preventDefault();
+					const formData = new FormData(this);
+					const userObj = Object.fromEntries(formData.entries());
+					try {
+						const res = await fetch("/addUser", {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify(userObj),
+						});
+						if (res.ok) {
+							alert("User added successfully!");
+							this.reset();
+						} else {
+							alert("Failed to add user");
+						}
+					} catch (err) {
+						alert("Error: " + err.message);
+					}
+				});
+			document
+				.getElementById("getUsersBtn")
+				.addEventListener("click", async () => {
+					const usersUl = document.getElementById("usersUl");
+					usersUl.innerHTML = "";
+					try {
+						const res = await fetch("/getUsers");
+						if (!res.ok) throw new Error("Failed to fetch users");
+						const users = await res.json();
+						if (users.length === 0) {
+							usersUl.innerHTML = "<li>No users found!</li>";
+						} else {
+							users.forEach((u) => {
+								const li = document.createElement("li");
+								li.textContent = `👤 ${u.username} - ${u.email}`;
+								usersUl.appendChild(li);
+							});
+						}
+					} catch (err) {
+						alert("Error: " + err.message);
+					}
+				});
+		</script>
+	</body>
+</html>
