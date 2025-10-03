@@ -2,12 +2,15 @@
 
 ## Using `mongo` and `mongo-express` docker images
 
-### Commands to create containers
+## Commands to create containers (choose only one way)
+
+### 1. Manually
 
 Run backend API in vs code
 ```
 node server.js
 ```
+
 Create specific network
 ```
 docker network create mongo-network
@@ -24,6 +27,8 @@ docker run -d ^
 mongo
 ```
 
+*Note: - linebreak with caret(^) in command prompt and backtick(`) in powershell*
+
 Create mongo-express container
 ```
 docker run -d ^
@@ -36,9 +41,19 @@ docker run -d ^
 mongo-express
 ```
 
-Access `http://localhost:8081` in browser and enter `Username = admin` & `Password = pass` (default) to sign in to MongoDB UI.
+### 2. With Compose.yaml file
+```
+docker compose -f compose.yaml up -d
+```
+
+*Note: - It will create a network & create and run 3 containers and connect them with network.*
+
+## Access the UI and DB
 
 Access `http://localhost:5050` in browser to interact with UI where you can add user and see all users.
+
+Access `http://localhost:8081` in browser and enter `Username = admin` & `Password = pass` (default) to sign in to MongoDB UI.
+
 
 ## UI Screenshots
 
